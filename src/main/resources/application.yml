@@ -1,1 +1,6 @@
-spring.application.name=desafio-itau
+server:
+  port: 8082
+
+spring:
+  application:
+    name: desafio-itau
