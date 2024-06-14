@@ -19,7 +19,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(JsonMappingException.class)
     public ProblemDetail handleJsonMappingException() {
         var pb = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        pb.setTitle("JSON Invalido");
+        pb.setTitle("JSON invalido");
         pb.setDetail("O JSON enviado possui um formato invalido");
         pb.setProperty("timestamp", Instant.now());
 
