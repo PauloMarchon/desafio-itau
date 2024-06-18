@@ -26,7 +26,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    void deveObterAsTransacoesComSucesso() {
+    void given_Transacoes_When_TentarObterTodasTransacoes_Then_DeveRetornarTodasAsTransacoesComSucesso(){
         NovaTransacaoDto t1 = new NovaTransacaoDto(150.00, OffsetDateTime.now());
         NovaTransacaoDto t2 = new NovaTransacaoDto(200.00, OffsetDateTime.now());
         NovaTransacaoDto t3 =  new NovaTransacaoDto(300.00, OffsetDateTime.now());
@@ -41,7 +41,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    void deveSalvarTransacaoComSucesso() {
+    void given_TransacaoComDadosValidos_When_TentarSalvarTransacao_Then_DeveSalvarTransacaoComSucesso(){
         double valor = 150.00;
         OffsetDateTime dataHora = OffsetDateTime.now();
         NovaTransacaoDto t1 = new NovaTransacaoDto(valor, dataHora);
@@ -58,7 +58,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    void deveFalharAoTentarSalvarTransacaoComValorInvalido() {
+    void given_TransacaoComValorInvalido_When_TentarSalvarTransacao_Then_DeveRetornarErroDeValorInvalidoEStatusUnprocessableEntity(){
         NovaTransacaoDto novaTransacao = new NovaTransacaoDto(-50.00, OffsetDateTime.now());
 
         assertThatThrownBy(() -> transacaoService.cadastrarTransacao(novaTransacao))
@@ -74,7 +74,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    void deveFalharAoTentarSalvarTransacaoComDataHoraInvalido() {
+    void given_TransacaoComDataHoraInvalido_When_TentarSalvarTransacao_Then_DeveRetornarErroDeDataHoraInvalidoEStatusUnprocessableEntit(){
         OffsetDateTime offsetDateTime = OffsetDateTime.now().plusMinutes(1);
         NovaTransacaoDto novaTransacao = new NovaTransacaoDto(50.00, offsetDateTime);
 
@@ -91,7 +91,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    void deveExcluirTodasAsTransacoesComSucesso() {
+    void given_TransacoesSalvas_When_TentarExcluirTodasTransacoes_Then_DeveExcluirTodasTransacoesComSucesso(){
         NovaTransacaoDto t1 = new NovaTransacaoDto(150.00, OffsetDateTime.now());
         NovaTransacaoDto t2 = new NovaTransacaoDto(200.00, OffsetDateTime.now());
         NovaTransacaoDto t3 =  new NovaTransacaoDto(300.00, OffsetDateTime.now());

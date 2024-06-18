@@ -23,7 +23,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    void deve_cadastrar_um_transacao_com_sucesso() {
+    void given_TransacaoComDadosValidos_When_RealizarChamadaCadastrarTransacao_Then_DeveSerCadastradaComSucessoERetornarStatusCode201() {
         given().contentType(ContentType.JSON)
                 .body("""
                         {
@@ -38,7 +38,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    void deve_retornar_422_ao_tentar_cadastrar_uma_transacao_de_valor_invalido(){
+    void given_TransacaoComValorInvalido_When_RealizarChamadaCadastrarTransacao_Then_DeveRetornarErroDeValorInvalidoEStatusCode422() {
         given().contentType(ContentType.JSON)
                 .body("""
                         {
@@ -57,7 +57,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    void deve_retornar_422_ao_tentar_cadastrar_uma_transacao_de_dataHora_invalido(){
+    void given_TransacaoComDataHoraInvalida_When_RealizarChamadaCadastrarTransacao_Then_DeveRetornarErroDeDataHoraInvalidaEStatusCode422() {
         given().contentType(ContentType.JSON)
                 .body("""
                         {
@@ -76,7 +76,7 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    void deve_retornar_400_ao_tentar_enviar_um_json_invalido(){
+    void given_JsonInvalidoComTipoValorInvalido_When_RealizarChamadaDeCadastrarTransacao_Then_DeveRetornarErroDeJsonInvalidoEStatusCode400() {
         given().contentType(ContentType.JSON)
                 .body("""
                         {
@@ -95,8 +95,8 @@ public class TransacaoControllerTest {
     }
 
     @Test
-    void deve_deletar_todas_transacoes_com_sucesso() {
-        given().contentType(ContentType.JSON)
+    void given_Transacoes_When_RealizarChamadaDeExcluirTodasTransacoes_Then_DeveExcluirTodasAsTransacoesERetornarStatusCode200(){
+        given()
                 .when()
                 .delete("/transacao")
                 .then()
