@@ -1,1 +1,44 @@
 services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - metrics-network
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    networks:
+      - metrics-network
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - 3100:3100
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+    volumes:
+      - ./config/loki.yml:/etc/loki/loki-config.yaml
+    networks:
+      - metrics-network
+
+  zipkin:
+    image: openzipkin/zipkin
+    mem_limit: 300m
+    ports:
+      - 9411:9411
+    networks:
+      - metrics-network
+
+networks:
+  metrics-network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:
