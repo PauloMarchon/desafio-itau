@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Api - Transacoes e Estatistica
+  description: Documentacao OpenApi para servico de Transacoes e Estatistica
+  version: 1.0.0
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: email@email.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+externalDocs:
+  description: Sobre o Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'http://localhost:8082'
+    description: Server para testes da aplicacao
+  - url: 'http://site-ficticio.com.br'
+    description: Server de producao
+tags:
+  - name: transacao
+    description: Registro de transacoes
+    externalDocs:
+      description: Saiba mais
+      url: 'http://swagger.io'
+  - name: estatistica
+    description: Analise de estatisticas
+    externalDocs:
+      description: Saiba mais
+      url: 'http://swagger.io'
+paths:
+  /transacao:
+    post:
+      tags:
+        - transacao
+      summary: Adiciona uma nova transacao
+      description: Adiciona uma nova transacao realizada a lista de transacoes
+      operationId: realizarTransacao
+      requestBody:
+        description: Dados da transacao
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NovaTransacaoDto'
+        required: true
+      responses:
+        '201':
+          description: Transacao cadastrada com sucesso
+        '400':
+          $ref: 'https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/BadRequest'
+        '422':
+          $ref: 'https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ValidationError'
+        '500':
+          $ref: 'https://api.swaggerhub.com/domains/smartbear-public/ProblemDetails/1.0.0#/components/responses/ServerError'
+    delete:
+      tags:
+        - transacao
+      summary: Excluir transacoes cadastradas
+      description: Exclui todas as transacoes cadastradas na lista de transacoes
+      operationId: excluirTransacoes
+      responses:
+        '200':
+          description: Transacoes excluidas com sucesso
+
+  /estatistica:
+    get:
+      tags:
+        - estatistica
+      summary: Realiza o calculo estatistico
+      description: Calcula a estatistica baseado nas transacoes realizadas no periodo informado
+      operationId: calcularEstatistica
+      parameters:
+        - name: periodo
+          in: path
+          description: Periodo de tempo para calcular a estatistica
+          required: false
+          schema:
+            type: integer
+      responses:
+          '200':
+            description: Calculo da estatistica realizado com sucesso
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/EstatisticaRespostaDto'
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    NovaTransacaoDto:
+      type: object
+      required:
+        - valor
+        - dataHora
+      properties:
+        valor:
+          type: number
+        data_hora:
+          type: object
+    EstatisticaRespostaDto:
+      type: object
+      required:
+        - count
+        - sum
+        - avg
+        - min
+        - max
+      properties:
+        count:
+          type: integer
+        sum:
+          type: number
+        avg:
+          type: number
+        min:
+          type: number
+        max:
+          type: number

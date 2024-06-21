@@ -1,6 +1,9 @@
 package com.paulomarchon.desafioitau.transacao;
 
 import com.paulomarchon.desafioitau.transacao.dto.NovaTransacaoDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,10 @@ public class TransacaoController {
         this.transacaoService = transacaoService;
     }
 
+    @Operation(summary = "Cadastra uma transacao", description = "Realiza o cadastro de uma transacao na lista de transacoes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Transacao cadastrada com sucesso")
+    })
     @PostMapping
     public ResponseEntity<?> realizarTransacao(@Validated @RequestBody NovaTransacaoDto novaTransacaoDto) {
         log.info("Solicitacao recebida para cadastro de transacao: {}", novaTransacaoDto);
@@ -26,7 +33,7 @@ public class TransacaoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> apagarTransacoes() {
+    public ResponseEntity<?> excluirTransacoes() {
         log.info("Solicitacao recebida para exclusao das transacoes:");
         transacaoService.excluirTransacoes();
         return ResponseEntity.ok().build();
