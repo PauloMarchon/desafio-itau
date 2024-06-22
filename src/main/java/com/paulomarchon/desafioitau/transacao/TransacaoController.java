@@ -23,7 +23,8 @@ public class TransacaoController {
 
     @Operation(summary = "Cadastra uma transacao", description = "Realiza o cadastro de uma transacao na lista de transacoes")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Transacao cadastrada com sucesso")
+            @ApiResponse(responseCode = "201", description = "Transacao cadastrada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Json invalido")
     })
     @PostMapping
     public ResponseEntity<?> realizarTransacao(@Validated @RequestBody NovaTransacaoDto novaTransacaoDto) {
