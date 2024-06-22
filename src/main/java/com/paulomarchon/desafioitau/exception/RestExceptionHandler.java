@@ -1,5 +1,6 @@
 package com.paulomarchon.desafioitau.exception;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -25,9 +26,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return exception.problemDetail();
     }
 
-    @ExceptionHandler(JsonMappingException.class)
+    @ExceptionHandler({JsonMappingException.class, JsonParseException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ProblemDetail handleJsonMappingException(JsonMappingException exception) {
+    public ProblemDetail handleJsonMappingException(Exception exception) {
         var pb = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         pb.setTitle("JSON invalido");
         pb.setDetail(exception.getMessage());

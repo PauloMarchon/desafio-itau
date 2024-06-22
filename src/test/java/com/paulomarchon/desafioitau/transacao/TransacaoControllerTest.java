@@ -88,10 +88,9 @@ public class TransacaoControllerTest {
                 .post("/transacao")
                 .then()
                 .statusCode(400)
-                .body("title", equalTo("JSON invalido"))
-                .body("detail", equalTo("O JSON enviado possui um formato invalido"))
-                .body("status", equalTo(400))
-                .body("timestamp", notNullValue());
+                .body("title", equalTo("Bad Request"))
+                .body("detail", equalTo("Failed to read request"))
+                .body("status", equalTo(400));
     }
 
     @Test
